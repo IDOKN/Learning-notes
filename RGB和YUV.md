@@ -9,9 +9,10 @@
 #####示例YUV 4:4:4
 ![4:4:4](https://i-msdn.sec.s-msft.com/dynimg/IC130499.gif)
 
-4:2:2
+#####4:2:2
 ![4:2:2](https://i-msdn.sec.s-msft.com/dynimg/IC84769.gif)
-4:2:0
+
+#####4:2:0
 ![MPEG-2 scheme](https://i-msdn.sec.s-msft.com/dynimg/IC146945.gif)
 
 等等参考 [msdn介绍YUV](https://msdn.microsoft.com/en-us/library/aa904813%28VS.80%29.aspx)
@@ -35,4 +36,5 @@ RGB转YUV：
 ###相关链接
 
 [msdn介绍YUV，不错的文字](https://msdn.microsoft.com/en-us/library/aa904813%28VS.80%29.aspx)
+
 [知名音视频博客，可惜过世了](http://blog.csdn.net/leixiaohua1020/article/details/18893769)
