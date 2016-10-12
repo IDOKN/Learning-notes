@@ -8,11 +8,13 @@
 ![三次握手](./1476196723795.png)
 ###TCP连接终止经典的四次挥手：
 ![四次挥手](./1476197027355.png)
+
 <font color=black size=3>终止连接，两端都有可能发起主动关闭，每个方向都需要一个FIN和ACK，某些情形下步骤1的FIN随数据一起发送；另外步骤2和3发送的分节都出自被动关闭一端，有可能被合并成一个分节。
 FIN分节的可能由程序调用close发生；也可能是进程自愿退出（调用exit或main函数返回）还有非自愿（收到一个终止本进程的信号，或者断电，宕机等）终止时，所有的描述符都被关闭，也会导致TCP连接上发出一个FIN。</font>
 
 ###状态转换
 ![Alt text](./1476198567000.png)
+
 <font color=black size=3>连接：从最初的**CLOSED**状态下执行主动打开，TCP发送一个SYN，客户端新的状态是**SYN_SENT**；服务端收到SYN后变成**SYN_RCVD**状态，如果这个TCP接着接收到一个带ACK的SYN，自己在发送一个ACK，新的状态变为**ESTABLISED**；可以开始传输数据包TCP Segment。</font>
 
 <font color=black size=3>连接终止：如果某个进程调用close，自己转换到**FIN_WAIT_1**状态，对端接收到FIN，从**ESTABLISED**状态转换到**CLOSE_WAIT**状态；同时对端发送FIN的ACK给自己（主动关闭端）状态转换到**FIN_WAIT_2**，同时被动关闭端也发送close，状态变为**LAST_ACK**，自己收到FIN，状态转换到**TIME_WAIT** （这个状态也是面试被问较多的地方，也是网络编程中最不易理解的状态）；其余状态看图。</font>
@@ -65,6 +67,7 @@ TCP将不给处于**TIME_WAIT**状态的连接发起新的化身，**TIME_WAIT**
 ####5，同时打开，和同时关闭的情形
 <font color=black size=3>1，同时打开，TCP特意设计可以处理同时打开，对于同时打开仅建立一条连接而不是两条。</font>
 ![Alt text](./1476294462940.png)
+
 <font color=black size=3>2，同时关闭，TCP允许同时关闭</font>
 ![Alt text](./1476294630216.png)
 
