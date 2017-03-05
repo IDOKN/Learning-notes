@@ -20,7 +20,8 @@ FIN分节的可能由程序调用close发生；也可能是进程自愿退出（
 <font color=black size=3>连接终止：如果某个进程调用close，自己转换到**FIN_WAIT_1**状态，对端接收到FIN，从**ESTABLISED**状态转换到**CLOSE_WAIT**状态；同时对端发送FIN的ACK给自己（主动关闭端）状态转换到**FIN_WAIT_2**，同时被动关闭端也发送close，状态变为**LAST_ACK**，自己收到FIN，状态转换到**TIME_WAIT** （这个状态也是面试被问较多的地方，也是网络编程中最不易理解的状态）；其余状态看图。</font>
 
 <font color=black size=3>**TIME_WAIT**状态存在的理由，该状态存在的最长分节生命期为2MSL（RFC建议值2分钟，Berkeley的实现改用30s）在1分钟到4分钟之间，迷途或漫游的重复分组通常由路由器异常引起（路由器崩溃等有可能导致路由循环），在迷途期间，发送端TCO超时重传，重传的分组通过某条正常路径到达目的地，不就迷途的分组也到达目的地，TCP必须正确处理这些重复分组；</font>
-<font color=black size=3>**TCP连接在2MSL等待期间，定义这个连接的socket不能再被使用，这个连接只能在2MSL结束后才能再被使用。（某些实现提供避开这个限制的方法。如socket和bind调用之间设置SO_REUSEADDR选项。但TCP原则上避免使用处于2MSL连接中的端口）**</font>
+<font color=black size=3>**TCP连接在2MSL等待期间，定义这个连接的socket不能再被使用，这个连接只能在2MSL结束后才能再被使用。**</font>
+<font color=black size=3>**HTTP端口耗尽问题：四分组的TCP连接<sourceIP, sourcePort, serverIP, 80>，其中三个是固定的，通过sourcePort的循环使用来确保不会遇到TIME_WAIT端口耗尽的问题。可以通过增加客户端负载生成机器的数量，或者确保客户端和服务端在循环使用几个虚拟IP地址以增加更多的连接组合。摘自《HTTP权威指南》第四章 连接管理**</font>
 
 **2MSL存在的两个理由：**
 <font color=black size=3>1，可靠地实现TCP全双工连接的终止；
